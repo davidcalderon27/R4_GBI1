@@ -1,0 +1,6 @@
+---
+title: "Tarea"
+author: "David Calderon"
+date: "2023-02-23"
+output: html_document
+---
