@@ -1,0 +1,69 @@
+---
+title: "Filogenética en R"
+author: "Moisés Gualapuro"
+format: html
+editor: visual
+---
+
+## Librerías requeridas
+
+```{r}
+InstallPackages = FALSE
+
+if (InstallPackages) {
+  if (!requireNamespace("BiocManager", quietly=TRUE)) 
+    install.packages("BiocManager")
+  BiocManager::install("msa")
+  
+  install.packages("adegenet")
+  install.packages("ape")
+  install.packages("ggtree")
+  install.packages("ggplot2")
+  install.packages("ips")
+  install.packages("bios2mds")
+  install.packages("haplotypes")
+  install.packages("pegas")
+  install.packages("phytools")
+  install.packages("stats")
+  install.packages("treeio")
+}
+library(pacman)
+pacman::p_load(adegenet, ape, ggtree, ggplot2, stats, ips, msa)
+
+```
+
+## Datos
+
+```{r}
+fname = "coati_mito.fas"
+AlignNeeded = TRUE # The program reads fasta file and aligns it
+
+if (AlignNeeded) {
+  
+  file <- readDNAStringSet(fname)#for reading multiple DNA sequences from msa package
+  file
+  
+  cb<- msa(file) # multiple sequence alignment from msa package   
+  cb
+  
+  ##########   CONVERTING ALIGN FILE TO FASTA FILE    ###############
+  
+  cv<-msaConvert(cb, type=c("bios2mds::align"))
+  
+  ##########   EXPORTING  ALIGNED FASTA FILE    ###############           
+  
+  library(bios2mds) # for exporting fasta file
+  
+  export.fasta(cv, outfile = "outfile.fas", ncol(cb), open = "w")
+}
+
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
