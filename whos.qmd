@@ -1,0 +1,56 @@
+---
+title: "IntroR"
+author: "David Calderon"
+format: html
+editor: visual
+---
+
+## Tarea
+
+Utilizando la data `who` que se puede cargar con `data("who")`. Esta tabla recoge datos sobre casos reportados de tuberculosis en el mundo. Construya un código para que se vea la siguiente figura. Que contiene:
+
+-   Datos de niñas y niños entre 0 y 14 años.
+
+-   Datos del año 1996 en adelante (1996 - 2012).
+
+-   Geometría de nube de puntos.
+
+-   Geometría de regresión lineal.
+
+-   Ecuación de la regresión de la regresión y el coeficiente de determinación.
+
+-   Coloración por años.
+
+Requiere usar las librerías `ggplot2, ggpubr, ggpmisc, dplyr, tidyverse`
+
+```{r}
+
+library(ggpmisc)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(tidyverse)
+
+```
+
+```{r}
+library(ggpubr); library(tidyverse); library(ggplot2)
+data("who")
+formula = y ~ x
+df= who %>% filter(year >= 1990 , year <= 2012) %>% 
+  ggplot(aes(x= new_sp_m014, na.rm = TRUE, y= new_sp_f014, color=year))+
+  geom_point(size= 0.8)+ geom_jitter(size= 0.5, alpha= 0.5)+ stat_poly_line(formula = formula, size= 0.5)+
+  stat_poly_eq(use_label(c('eq','adj.R2')),formula = formula, size= 2)+
+  facet_wrap(year ~.)
+
+df
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
